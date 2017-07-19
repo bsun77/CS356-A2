@@ -9,6 +9,8 @@ public class User implements TwitterObject {
 	private List<Observer> userObservers;
 	private List<Observer> guiObservers;
 	private List<String> posts;
+	private long creationTime;
+	private long lastUpdateTime;
 	
 	public User(String userid){
 		this.name = userid;
@@ -18,6 +20,7 @@ public class User implements TwitterObject {
 		newsFeed = new ArrayList<String>();
 		posts = new ArrayList<String>();
 		userObservers.add(new UserFeedObserver(this));
+		creationTime = System.currentTimeMillis();
 	}
 
 	@Override
@@ -33,7 +36,7 @@ public class User implements TwitterObject {
 	public void post(String msg){
 		// add to the list
 		posts.add(msg);
-		msg = "-  " + name +": " + msg;
+		msg = "-  " + name +" at " +lastUpdateTime +" posted : " + msg;
 		notifyUserObservers(msg);
 	}
 	
@@ -66,7 +69,9 @@ public class User implements TwitterObject {
 	public void addToNewsFeed(String post) {
 		newsFeed.add(post);
 		notifyGUIObservers(post);
+		lastUpdateTime = System.currentTimeMillis();
 	}
+	
 	public void notifyGUIObservers(String msg){
 		for (Observer ob : guiObservers){
 			ob.update(msg);
@@ -84,4 +89,22 @@ public class User implements TwitterObject {
 	public void acceptVisitor(NiceWordsVisitor visitor){
 		visitor.visit(this);
 	}
+	
+	public void acceptVisitor(DuplicateVisitor visitor){
+		visitor.visit(this);
+	}
+	
+	public void acceptVisitor(lastUpdateVisitor visitor){
+		visitor.visit(this);
+	}
+
+	@Override
+	public long getCreationtime() {
+		return creationTime;
+	}
+	
+	public long getLastUpdateTime(){
+		return lastUpdateTime;
+	}
+
 }

@@ -19,7 +19,6 @@ import javax.swing.JList;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-
 public class UserGUI {
 
 	private JFrame frame;
@@ -52,7 +51,7 @@ public class UserGUI {
 				user.removeGUIObserver(guiObserver);
 			}
 		});
-		frame.setTitle("User " + user.getID());
+		frame.setTitle("User " + user.getID() +" creation time: " +user.getCreationtime());
 		ImageIcon img = new ImageIcon("TwitterIcon.jpg");
 		frame.setIconImage(img.getImage());
 		frame.setBounds(100, 100, 375, 363);

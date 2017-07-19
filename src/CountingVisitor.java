@@ -1,5 +1,5 @@
 
-public class CountingVisitor {
+public class CountingVisitor implements visitor {
 
 	int totalusers;
 	int totalgroups;
@@ -11,6 +11,7 @@ public class CountingVisitor {
 		totalmsg = 0;
 	}
 	
+	@Override
 	public void visit(User user){
 		totalusers++;
 		totalmsg += user.getPosts().size();

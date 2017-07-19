@@ -220,7 +220,31 @@ public class AdminGUI {
 		});
 		btnPositivePercentage.setBounds(395, 253, 120, 40);
 		frmAdminControlPanel.getContentPane().add(btnPositivePercentage);
-
+		
+		JButton btnNewButton = new JButton("Duplicate IDs");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UserGroup usgrp = checkgroup.get((String)root.getUserObject());
+				DuplicateVisitor visitor = new DuplicateVisitor();
+				usgrp.acceptVisitor(visitor);
+				JOptionPane.showMessageDialog(null, "The number of invalid users is: " +visitor.getDuplicateNames() 
+						+"\n" +"The number of invalid groups is: "+visitor.getDuplicateGroups());
+			}
+		});
+		btnNewButton.setBounds(254, 150, 120, 40);
+		frmAdminControlPanel.getContentPane().add(btnNewButton);
+		
+		JButton btnLastUserUpdated = new JButton("Last Updated");
+		btnLastUserUpdated.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UserGroup usgrp = checkgroup.get((String)root.getUserObject());
+				lastUpdateVisitor visitor = new lastUpdateVisitor();
+				usgrp.acceptVisitor(visitor);
+				JOptionPane.showMessageDialog(null, "The last update was made by: "+visitor.getlastUpdate().getID());
+			}
+		});
+		btnLastUserUpdated.setBounds(395, 150, 120, 41);
+		frmAdminControlPanel.getContentPane().add(btnLastUserUpdated);
 	}
 	
 	public static AdminGUI getInstance(){

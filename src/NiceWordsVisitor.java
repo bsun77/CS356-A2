@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class NiceWordsVisitor {
+public class NiceWordsVisitor implements visitor {
 	
 	/*
 	 * Separated from CountingVisitor due to the runtime 
@@ -17,6 +17,7 @@ public class NiceWordsVisitor {
 	    add("cute");
 	    add("nice");
 	    add("great");
+	    add("good");
 	}};
 	
 	public NiceWordsVisitor(){
@@ -24,6 +25,8 @@ public class NiceWordsVisitor {
 		total = 0;
 	}
 	
+
+	@Override
 	public void visit(User user){
 		total += user.getPosts().size();
 		for(int i = 0; i < user.getPosts().size(); i++){
